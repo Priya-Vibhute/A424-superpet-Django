@@ -73,30 +73,78 @@
               >
             </li>
 
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Category
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category-detail' 'dog-food' %}"
+                    >Dog Food</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category-detail' 'cat-food' %}"
+                    >Catfood</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category-detail' 'healthcare' %}"
+                    >HealthCare</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category-detail' 'grooming' %}"
+                    >Grooming</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'category-detail' 'pet-toys' %}"
+                    >Pet toys</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
 
-              <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+          {% if request.user.first_name
+             %}
+          <a class="btn btn-warning mx-2" href="#" role="button"
+            >{{request.user.first_name}} {{request.user.last_name}}</a
           >
-            Category
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'category-detail' 'dog-food' %}">Dog Food</a></li>
-            <li><a class="dropdown-item" href="{% url 'category-detail' 'cat-food' %}">Catfood</a></li>
-            <li><a class="dropdown-item" href="{% url 'category-detail' 'healthcare' %}">HealthCare</a></li>
-            <li><a class="dropdown-item" href="{% url 'category-detail' 'grooming' %}">Grooming</a></li>
-            <li><a class="dropdown-item" href="{% url 'category-detail' 'pet-toys' %}">Pet toys</a></li>
-          </ul>
-        </li>
-          </ul>
 
-          <a class="btn btn-warning mx-2" href="#" role="button">Login</a>
-          <a class="btn" href="#" role="button" id="button">Logout</a>
+          <a
+            class="btn btn-warning mx-2"
+            href="{% url 'logout' %}"
+            role="button"
+            >Logout</a
+          >
+
+          {% else %}
+          <a class="btn btn-warning mx-2" href="{% url 'login' %}" role="button"
+            >Login</a
+          >
+          <a class="btn" href="{% url 'register'%}" role="button" id="button"
+            >register</a
+          >
+          {% endif %}
         </div>
       </div>
     </nav>
