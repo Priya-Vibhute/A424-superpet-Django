@@ -15,6 +15,7 @@ class Product(models.Model):
     product_price=models.PositiveIntegerField()
     product_image=models.ImageField(upload_to='products',default="")
     category=models.ForeignKey(Category,on_delete=models.PROTECT,null=True)
+    product_brand=models.CharField(null=False,default="superpet",max_length=60)
 
 
     def __str__(self):

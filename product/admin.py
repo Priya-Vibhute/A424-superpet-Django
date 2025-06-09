@@ -13,3 +13,5 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display=['id','category_name','category_slug']
 
 admin.site.register(Category,CategoryAdmin)
+
+admin.site.site_header="Superpet"

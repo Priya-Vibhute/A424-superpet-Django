@@ -42,12 +42,13 @@
           />
           SuperPet
         </a>
-        <form class="d-flex w-25">
+        <form class="d-flex w-25" action="{% url 'search' %}">
           <input
             class="form-control me-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
+            name="search"
           />
           <button class="btn btn-warning" type="submit">Search</button>
         </form>
@@ -124,8 +125,7 @@
             </li>
           </ul>
 
-          {% if request.user.first_name
-             %}
+          {% if request.user.first_name%}
           <a class="btn btn-warning mx-2" href="#" role="button"
             >{{request.user.first_name}} {{request.user.last_name}}</a
           >

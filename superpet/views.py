@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate,login,logout
+from product.models import Product
 
 def home(request):
     return render(request,"index.html")
@@ -44,3 +45,11 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect("/login")
+
+def search(request):
+    keyword=request.GET.get('search')
+    products=Product.objects.filter(product_name__icontains=keyword)
+    context={
+        "products":products
+    }
+    return render(request,"search.html",context)
