@@ -1,12 +1,22 @@
 <div class="col">
-  <a href="{% url 'product-detail' p.id%}" style="text-decoration:none">
+ 
     <div class="card">
-      <img src="{{p.product_image.url}}" class="card-img-top" alt="..." />
+       <a href="{% url 'product-detail' p.id%}" style="text-decoration:none">
+               <img src="{{p.product_image.url}}" class="card-img-top" alt="..." />
+       </a>
       <div class="card-body">
         <h5 class="card-title">{{p.product_name}}</h5>
         <p class="card-text">{{p.product_description}}</p>
         <p class="card-text">{{p.product_price}}</p>
+        <form>
+            <button class="btn btn-primary m-3" type="button" onclick="updateQuantity({{p.id}},-1)">-</button>
+            <input type="number" value=1 name="quantity" id="quantity{{p.id}}" min="1" max="100">
+            <button class="btn btn-primary m-3" type="button" onclick="updateQuantity({{p.id}},1)">+</button>
+          
+            <button class="btn btn-primary m-3">Add to Cart</button>
+        </form>
+       
       </div>
     </div>
-  </a>
+ 
 </div>
