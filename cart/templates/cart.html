@@ -2,6 +2,13 @@
 
 {% block content %}
 
-          <p>Cart</p>
+          {% for cart_item in cartitems %}
+
+
+                  <p>{{cart_item.quantity}}</p>
+                  <p>{{cart_item.products.product_name}}</p>
+
+
+          {% endfor %}
 
 {% endblock  %}
