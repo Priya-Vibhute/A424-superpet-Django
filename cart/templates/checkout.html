@@ -3,6 +3,18 @@
 
 {% block content %}
 
-         {{form}}
+<form action="">
+          {% for field in form %}
+
+           <div class="mb-3">
+                    {{field.label_tag}}
+                    {{field}}
+           </div>
+          
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Checkout</button>
+</form>
+
+      
 
 {% endblock content %}
