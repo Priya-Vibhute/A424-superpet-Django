@@ -13,6 +13,23 @@ class CartItem(models.Model):
     products=models.ForeignKey(Product,on_delete=models.CASCADE)
     quantity=models.PositiveIntegerField(null=True)
 
+class Order(models.Model):
+    order_id=models.CharField(max_length=15,primary_key=True)
+    user=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+    product=models.ManyToManyField(Product,through="OrderItem")
+    address_line_1=models.CharField(max_length=40,null=False)
+    address_line_2=models.CharField(max_length=40,null=False)
+    city=models.CharField(max_length=40,null=False)
+    state=models.CharField(max_length=50,null=False)
+    pincode=models.PositiveIntegerField(null=False)
+    phoneno=models.CharField(max_length=10,null=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    paid=models.BooleanField(default=False)
 
 
+class OrderItem(models.Model):
+    order=models.ForeignKey(Order,on_delete=models.CASCADE)
+    products=models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantity=models.PositiveIntegerField(null=True)
 

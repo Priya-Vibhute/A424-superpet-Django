@@ -53,3 +53,6 @@ def search(request):
         "products":products
     }
     return render(request,"search.html",context)
+
+def template_filters_example(request):
+    return render(request,"demo.html",{"data":"Django is easy"})
