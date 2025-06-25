@@ -4,8 +4,12 @@ from product.models import Product
 from .forms import OrderForm
 import uuid
 import razorpay
-from superpet.settings import RAZORPAY_ID,RAZORPAY_SECRET
+from superpet.settings import RAZORPAY_ID,RAZORPAY_SECRET,EMAIL_HOST_USER
 from django.views.decorators.csrf import csrf_exempt
+from razorpay.errors import SignatureVerificationError
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
 
 # Create your views here.
 
@@ -18,7 +22,7 @@ def cart(request):
     for cartitem in cartitems:
         total+=cartitem.quantity*cartitem.products.product_price
 
-    return render(request,"cart.html",{"cartitems":cartitems,"total":total})
+    return render(request,"cart.html",{"cartitems":cartitems,"total":total,"isEmpty":len(cartitems)==0})
 
 
 def add_to_cart(request,productId):
@@ -115,14 +119,48 @@ def payment_success(request,order_id):
     razorpay_signature=request.POST.get('razorpay_signature')
 
     client=razorpay.Client(auth=(RAZORPAY_ID, RAZORPAY_SECRET))
+    try:
+        payment_check=client.utility.verify_payment_signature({
+            'razorpay_order_id': razorpay_order_id,
+           'razorpay_payment_id': razorpay_payment_id,
+           'razorpay_signature': razorpay_signature
+        })
 
-    client.utility.verify_payment_signature({
-        'razorpay_order_id': razorpay_order_id,
-       'razorpay_payment_id': razorpay_payment_id,
-       'razorpay_signature': razorpay_signature
-    })
+        if payment_check:
+           order=Order.objects.get(order_id=order_id)
+           order.paid=True
+           order.save()
 
+           cart=Cart.objects.get(id=request.session.get('cart_id'))
+           for cartitem in cart.cartitem_set.all():
+               cartitem.delete()
+
+           email_body=render_to_string("email.html",{"orders":order.orderitem_set.all()})
+
+           send_mail(
+               "Order Placed Successfully",
+               email_body,
+               EMAIL_HOST_USER,
+               ['siyavisrani@gmail.com','firdousiqra26@gmail.com','priyanka.vibhute@itvedant.com',request.user.email],
+               fail_silently=False,
+               html_message=email_body
+               )
+
+
+
+    except SignatureVerificationError:
+         return render(request,"payment_failed.html")
     return render(request,"success.html")
+
+
+def orders(request):
+    orders=Order.objects.filter(user=request.user) 
+    return render(request,"orders.html",{"orders":orders})
+
+
+
+
+   
          
 
 

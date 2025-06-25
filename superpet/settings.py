@@ -139,3 +139,13 @@ MEDIA_URL='/media/'
 
 RAZORPAY_ID='rzp_test_63Bm9tkwRlRInQ'
 RAZORPAY_SECRET='4oNxrRmEDEGtxFkmx4QjdA9h'
+
+
+# Mail setting
+
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT=587
+EMAIL_HOST_USER="priyanka.vibhute@itvedant.com" 
+EMAIL_HOST_PASSWORD="dhxg kkju dcym cdls"
+EMAIL_USE_TLS=True

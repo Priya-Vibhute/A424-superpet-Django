@@ -2,6 +2,12 @@
 {% load custom_filters %}
 {% block content %}
 
+{% if isEmpty %}
+
+        <h1>Cart is empty</h1>
+
+{% else %}
+
 <div class="row">
   <div class="col">
     {{20|mul:2}}
@@ -86,6 +92,7 @@
           <td>{{cart_item.products.product_price|mul:cart_item.quantity}}</td>
         </tr>
 
+      
         {% endfor %}
       
       </tbody>
@@ -97,6 +104,14 @@
 
 
   </div>
+
+ 
+
+
 </div>
+
+{% endif %}
+
+
 
 {% endblock %}
